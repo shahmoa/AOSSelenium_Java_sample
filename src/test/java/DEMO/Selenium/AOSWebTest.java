@@ -14,20 +14,30 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class AOSWebTest {
     private static RemoteWebDriver driver;
-    static DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+    private static DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 
     @BeforeClass
     public static void openBrowser() throws MalformedURLException {
 
+        String clientID = "t511780658_oauth2-r59KGnAQQhMfzYTlnpar@hpe.com";
+        String clientSecret = "pskKNTcojAyDEpMpw1gS";
+        String SeleniumURL = "http://ftaas.saas.hpe.com/wd/hub/";
+        String str = System.getenv("SELENIUM_ADDRESS");
+        String testName = "Selenium/Java-AOS-remote-exec";
+        if (str != null) {
+            clientID = System.getenv("SRF_CLIENT_ID");
+            clientSecret = System.getenv("SRF_CLIENT_SECRET");
+            SeleniumURL = System.getenv("SELENIUM_ADDRESS");
+            testName = "Selenium/Java-AOS";
+        }
+
         capabilities.setVersion("latest");
         capabilities.setCapability("platform", "Windows 10");
-        capabilities.setCapability("testName", "Selenium Java - Online Shopping");
-        capabilities.setCapability("SRF_CLIENT_ID", "<REPLACE THIS WITH SRF_CLIENT_ID>");
-        capabilities.setCapability("SRF_CLIENT_SECRET", "<REPLACE THIS WITH SRF_CLIENT_SECRET>");
+        capabilities.setCapability("testName", testName);
+        capabilities.setCapability("SRF_CLIENT_ID", clientID);
+        capabilities.setCapability("SRF_CLIENT_SECRET", clientSecret);
         capabilities.setCapability("resolution", "1366x768");
-
-        driver = new RemoteWebDriver(
-                new URL("http://ftaas.saas.hpe.com/wd/hub/"), capabilities);
+        driver = new RemoteWebDriver(new URL(SeleniumURL), capabilities);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 

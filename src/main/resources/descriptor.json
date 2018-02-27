@@ -1,4 +1,6 @@
-[{
-  "runnableClass": "com.hpe.srf.JUnitTest",
-  "framework": "junit"
-}]
+[
+  {
+    "runnableClass": "DEMO.Selenium.AOSWebTest",
+    "framework": "junit"
+  }
+]
