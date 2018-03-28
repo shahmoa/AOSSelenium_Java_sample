@@ -1,6 +1,6 @@
 [
   {
-    "runnableClass": "DEMO.Selenium.AOSWebTest",
+    "runnableClass": "com.mf.AOSWebTest",
     "framework": "junit"
   }
 ]
