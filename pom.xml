@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>DEMO.Selenium</groupId>
+    <groupId>com.mf</groupId>
     <artifactId>AOS-Selenium</artifactId>
     <version>1.0-SNAPSHOT</version>
     <dependencies>
@@ -25,6 +25,7 @@
         </dependency>
     </dependencies>
     <build>
+        <testSourceDirectory>src/main/java</testSourceDirectory>
         <resources>
             <resource>
                 <directory>${basedir}/src/main/resources/</directory>
@@ -33,6 +34,37 @@
         </resources>
         <plugins>
             <plugin>
+                <!-- This plugin is key to create a LFT Maven project to have the jar file
+                     created so SRF can use it.
+                     More information on the plugin itself can be found
+                     http://maven.apache.org/plugins/maven-assembly-plugin/ -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <!--phase>compile</phase--> <!-- bind to the compiling phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin-->
+            <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4.1</version>
@@ -50,8 +82,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin-->
         </plugins>
-    <testSourceDirectory>src/test/java</testSourceDirectory>
     </build>
 </project>
