@@ -3,6 +3,7 @@ package com.mf;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -11,6 +12,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.http.HttpClient;
+import org.openqa.selenium.remote.HttpCommandExecutor;
+import org.openqa.selenium.remote.CommandInfo;
+
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.HttpHost;
 
 public class AOSWebTest {
     private static RemoteWebDriver driver;
@@ -19,16 +26,17 @@ public class AOSWebTest {
     @BeforeClass
     public static void openBrowser() throws MalformedURLException {
 
+        boolean hasProxy = false;
         String clientID = "";
         String clientSecret = "";
         String SeleniumURL = "http://ftaas.saas.hpe.com/wd/hub";
         String testName = "Selenium/Java-AOS-remote-exec";
 
-        String str = System.getenv("SELENIUM_ADDRESS");
-        if (str != null) {
+        String remoteDriverAddr = System.getenv("SELENIUM_ADDRESS");
+        if (remoteDriverAddr != null) {
+            SeleniumURL = remoteDriverAddr;
             clientID = System.getenv("SRF_CLIENT_ID");
             clientSecret = System.getenv("SRF_CLIENT_SECRET");
-            SeleniumURL = System.getenv("SELENIUM_ADDRESS");
             testName = "Selenium/Java-AOS";
         }
         capabilities = DesiredCapabilities.chrome();
@@ -39,7 +47,28 @@ public class AOSWebTest {
         capabilities.setCapability("testName", testName);
         capabilities.setCapability("SRF_CLIENT_ID", clientID);
         capabilities.setCapability("SRF_CLIENT_SECRET", clientSecret);
-        driver = new RemoteWebDriver(new URL(SeleniumURL), capabilities);
+
+        // this code was not tested //
+        if (hasProxy && remoteDriverAddr==null) {
+            URL srfGatewayUrl = new URL("https", "ftaas.saas.hpe.com", 443, "/wd/hub/");
+
+            System.out.println("Creating remote web driver with address: " + srfGatewayUrl);
+
+            String proxyHost = "http://pac.wellsfargo.net"; //use your org proxy
+            int proxyPort = 80;
+
+            HttpClientBuilder builder = HttpClientBuilder.create();
+            HttpHost driverProxy = new HttpHost(proxyHost, proxyPort);
+
+            builder.setProxy(driverProxy);
+
+            HttpClient.Factory factory = new MyHttpClientFactory(builder);
+            HttpCommandExecutor executor = new HttpCommandExecutor(new HashMap<String, CommandInfo>(), srfGatewayUrl, factory);
+
+            driver = new RemoteWebDriver(executor, capabilities);
+        } else {
+            driver = new RemoteWebDriver(new URL(SeleniumURL), capabilities);
+        }
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
