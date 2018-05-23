@@ -22,13 +22,15 @@ import org.apache.http.HttpHost;
 public class AOSWebTest {
     private static RemoteWebDriver driver;
     private static DesiredCapabilities capabilities;
+    private final String AOSuserName = "";           // YOUR AOS USER NAME
+    private final String AOSpassword = "";           // YOUR AOS PASSWORD (CLEAR TEXT)
 
     @BeforeClass
     public static void openBrowser() throws MalformedURLException {
 
         boolean hasProxy = false;
-        String clientID = "[CLIENT ID HERE]";
-        String clientSecret = "[CLIENT SECRET HERE]";
+        String clientID = "";            // YOUR SRF CLIENT ID
+        String clientSecret = "";        // YOUR SRF CLIENT SECRET
         String SeleniumURL = "http://ftaas.saas.hpe.com/wd/hub";
         String testName = "Selenium/Java-AOS-remote-exec";
 
@@ -57,7 +59,7 @@ public class AOSWebTest {
 
             System.out.println("Creating remote web driver with address: " + srfGatewayUrl);
 
-            String proxyHost = "http://pac.wellsfargo.net"; //use your org proxy
+            String proxyHost = ""; //use your org proxy
             int proxyPort = 80;
 
             HttpClientBuilder builder = HttpClientBuilder.create();
@@ -78,22 +80,31 @@ public class AOSWebTest {
     @Test
     public void OnlineShoppingE2E() throws InterruptedException {
         Actions builder = new Actions(driver);
+        System.out.println("Navigeting to http://advantageonlineshopping.com");
         driver.get("http://advantageonlineshopping.com/#");
 
+        System.out.println("Click the search field");
         driver.findElementByXPath("//*[@id=\"menuSearch\"]").click();
+        System.out.println("Type \"Speakers\"");
         driver.findElementByXPath("//*[@id=\"autoComplete\"]").sendKeys("Speakers");     // search speakers
+        System.out.println("Select a speaker");
         driver.findElementByCssSelector("a.product:nth-child(3) > img:nth-child(1)").click();           // select a speaker
 
+        System.out.println("Add to cart");
         WebElement addToCart = driver.findElementByCssSelector(".fixedBtn > button:nth-child(1)");      // add to cart
         builder.click(addToCart).build().perform();
-        driver.findElementByXPath("//*[@id=\"checkOutPopUp\"]").click();                                // Check out
 
-        driver.findElementByXPath("/html/body/div[3]/section/article/div/div[1]/div/div[1]/sec-form/sec-view[1]/div/input").sendKeys("Shahar");
-        driver.findElementByXPath("/html/body/div[3]/section/article/div/div[1]/div/div[1]/sec-form/sec-view[2]/div/input").sendKeys("Password1");
+        System.out.println("Start checking out flow");
+        driver.findElementByXPath("//*[@id=\"checkOutPopUp\"]").click();                                // Check out
+        System.out.println("Type user name and password");
+        driver.findElementByXPath("/html/body/div[3]/section/article/div/div[1]/div/div[1]/sec-form/sec-view[1]/div/input").sendKeys(AOSuserName);
+        driver.findElementByXPath("/html/body/div[3]/section/article/div/div[1]/div/div[1]/sec-form/sec-view[2]/div/input").sendKeys(AOSpassword);
+        System.out.println("Start logging out flow");
         WebElement clickLogin = driver.findElementByXPath("//*[@id=\"login_btnundefined\"]");
         builder.click(clickLogin).build().perform();                                                  // Click log in
         driver.findElementByXPath("//*[@id=\"next_btn\"]").click();                             // Click Next
         driver.findElementByXPath("//*[@id=\"pay_now_btn_MasterCredit\"]").click();             // Click pay now
+        System.out.println("Done!");
     }
 
     @AfterClass
