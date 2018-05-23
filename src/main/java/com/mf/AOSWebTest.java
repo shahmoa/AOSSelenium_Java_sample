@@ -27,8 +27,8 @@ public class AOSWebTest {
     public static void openBrowser() throws MalformedURLException {
 
         boolean hasProxy = false;
-        String clientID = "t511780658_oauth2-r59KGnAQQhMfzYTlnpar";
-        String clientSecret = "pskKNTcojAyDEpMpw1gS";
+        String clientID = "[CLIENT ID HERE]";
+        String clientSecret = "[CLIENT SECRET HERE]";
         String SeleniumURL = "http://ftaas.saas.hpe.com/wd/hub";
         String testName = "Selenium/Java-AOS-remote-exec";
 
