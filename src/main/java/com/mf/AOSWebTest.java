@@ -22,16 +22,16 @@ import org.apache.http.HttpHost;
 public class AOSWebTest {
     private static RemoteWebDriver driver;
     private static DesiredCapabilities capabilities;
-    private final String AOSuserName = "Shahar";           // YOUR AOS USER NAME
-    private final String AOSpassword = "Password1";           // YOUR AOS PASSWORD (CLEAR TEXT)
+    private final String AOSuserName = "Logan";           // YOUR AOS USER NAME
+    private final String AOSpassword = "Demo4u";           // YOUR AOS PASSWORD (CLEAR TEXT)
     private static final String SUTAddress = "http://advantageonlineshopping.com/#";
 
     @BeforeClass
     public static void openBrowser() throws MalformedURLException {
 
         boolean hasProxy = false;
-        String clientID = "";            // YOUR SRF CLIENT ID
-        String clientSecret = "";        // YOUR SRF CLIENT SECRET
+        String clientID = "t511780658_oauth2-0bciq8sIsktFS2kpffxL@hpe.com";            // YOUR SRF CLIENT ID
+        String clientSecret = "KS4cO183jRtCGLgCT8WC";        // YOUR SRF CLIENT SECRET
         String SeleniumURL = "http://ftaas.saas.hpe.com/wd/hub";
         String testName = "Selenium/Java-AOS-remote-exec";
         String tunnelName;
@@ -105,8 +105,8 @@ public class AOSWebTest {
         System.out.println("Start logging out flow");
         WebElement clickLogin = driver.findElementByXPath("//*[@id=\"login_btnundefined\"]");
         builder.click(clickLogin).build().perform();                                                  // Click log in
-        driver.findElementByXPath("//*[@id=\"next_btn\"]").click();                             // Click Next
-        driver.findElementByXPath("//*[@id=\"pay_now_btn_MasterCredit\"]").click();             // Click pay now
+        //driver.findElementByXPath("//*[@id=\"next_btn\"]").click();                             // Click Next
+       // driver.findElementByXPath("//*[@id=\"pay_now_btn_MasterCredit\"]").click();             // Click pay now
         System.out.println("Done!");
     }
 
