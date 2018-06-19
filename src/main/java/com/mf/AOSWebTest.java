@@ -22,7 +22,7 @@ import org.apache.http.HttpHost;
 public class AOSWebTest {
     private static RemoteWebDriver driver;
     private static DesiredCapabilities capabilities;
-    private final String AOSuserName = "Logan";           // YOUR AOS USER NAME
+    private final String AOSuserName = "peter";           // YOUR AOS USER NAME
     private final String AOSpassword = "Demo4u";           // YOUR AOS PASSWORD (CLEAR TEXT)
     private static final String SUTAddress = "http://www.advantageonlineshopping.com/#/";               // USE FOR PUBLIC URL
     //private static final String SUTAddress = "http://nimbusserver.aos.com:8000/#/";                        //USE WHEN TUNNELING
