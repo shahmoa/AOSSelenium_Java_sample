@@ -24,7 +24,7 @@ public class AOSWebTest {
     private static DesiredCapabilities capabilities;
     private final String AOSuserName = "Logan";           // YOUR AOS USER NAME
     private final String AOSpassword = "Demo4u";           // YOUR AOS PASSWORD (CLEAR TEXT)
-    private static final String SUTAddress = "http://advantageonlineshopping.com/#";
+    private static final String SUTAddress = "http://nimbusserver.aos.com:8000/#/";
 
     @BeforeClass
     public static void openBrowser() throws MalformedURLException {
