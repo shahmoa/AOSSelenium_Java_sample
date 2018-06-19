@@ -24,7 +24,8 @@ public class AOSWebTest {
     private static DesiredCapabilities capabilities;
     private final String AOSuserName = "Logan";           // YOUR AOS USER NAME
     private final String AOSpassword = "Demo4u";           // YOUR AOS PASSWORD (CLEAR TEXT)
-    private static final String SUTAddress = "http://nimbusserver.aos.com:8000/#/";
+    private static final String SUTAddress = "http://www.advantageonlineshopping.com/#/";               // USE FOR PUBLIC URL
+    //private static final String SUTAddress = "http://nimbusserver.aos.com:8000/#/";                        //USE WHEN TUNNELING
 
     @BeforeClass
     public static void openBrowser() throws MalformedURLException {
@@ -34,7 +35,7 @@ public class AOSWebTest {
         String clientSecret = "KS4cO183jRtCGLgCT8WC";        // YOUR SRF CLIENT SECRET
         String SeleniumURL = "http://ftaas.saas.hpe.com/wd/hub";
         String testName = "Selenium/Java-AOS-remote-exec";
-        String tunnelName;
+        //String tunnelName="Mo's Tunnel";
 
         String remoteDriverAddr = System.getenv("SELENIUM_ADDRESS");
         if (remoteDriverAddr != null) {
@@ -42,7 +43,8 @@ public class AOSWebTest {
             clientID = System.getenv("SRF_CLIENT_ID");
             clientSecret = System.getenv("SRF_CLIENT_SECRET");
             testName = "Selenium/Java-AOS";
-            tunnelName = "";
+            //tunnelName = System.getenv("tunnelName");
+
         }
         capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability("build", "12.3.5");
@@ -55,6 +57,7 @@ public class AOSWebTest {
         capabilities.setCapability("testName", testName);
         capabilities.setCapability("SRF_CLIENT_ID", clientID);
         capabilities.setCapability("SRF_CLIENT_SECRET", clientSecret);
+        //capabilities.setCapability("tunnelName", tunnelName);
 
         // this code was not tested //
         if (hasProxy && remoteDriverAddr==null) {
@@ -83,7 +86,7 @@ public class AOSWebTest {
     @Test
     public void OnlineShoppingE2E() throws InterruptedException {
         Actions builder = new Actions(driver);
-        System.out.println("Navigeting to " + SUTAddress);
+        System.out.println("Navigating to " + SUTAddress);
         driver.get(SUTAddress);
 
         System.out.println("Click the search field");
