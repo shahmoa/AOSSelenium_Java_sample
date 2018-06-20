@@ -22,7 +22,7 @@ import org.apache.http.HttpHost;
 public class AOSWebTest {
     private static RemoteWebDriver driver;
     private static DesiredCapabilities capabilities;
-    private final String AOSuserName = "peter";           // YOUR AOS USER NAME
+    private final String AOSuserName = "logan";           // YOUR AOS USER NAME
     private final String AOSpassword = "Demo4u";           // YOUR AOS PASSWORD (CLEAR TEXT)
     private static final String SUTAddress = "http://www.advantageonlineshopping.com/#/";               // USE FOR PUBLIC URL
     //private static final String SUTAddress = "http://nimbusserver.aos.com:8000/#/";                        //USE WHEN TUNNELING
@@ -35,7 +35,7 @@ public class AOSWebTest {
         String clientSecret = "KS4cO183jRtCGLgCT8WC";        // YOUR SRF CLIENT SECRET
         String SeleniumURL = "http://ftaas.saas.hpe.com/wd/hub";
         String testName = "Selenium/Java-AOS-remote-exec";
-        //String tunnelName="Mo's Tunnel";
+        //String tunnelName="Mo_Tunnel";
 
         String remoteDriverAddr = System.getenv("SELENIUM_ADDRESS");
         if (remoteDriverAddr != null) {
@@ -95,7 +95,7 @@ public class AOSWebTest {
         driver.findElementByXPath("//*[@id=\"autoComplete\"]").sendKeys("Speakers");     // search speakers
         System.out.println("Select a speaker");
         driver.findElementByCssSelector("a.product:nth-child(3) > img:nth-child(1)").click();           // select a speaker
-
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         System.out.println("Add to cart");
         WebElement addToCart = driver.findElementByCssSelector(".fixedBtn > button:nth-child(1)");      // add to cart
         builder.click(addToCart).build().perform();
